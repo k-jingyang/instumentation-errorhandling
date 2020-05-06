@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -25,8 +26,10 @@ public class TracingFilter extends OncePerRequestFilter {
         HttpServletRequest idInjectedRequest = new InjectHeader(request,
                 KmoConstants.TRACING_ID_HEADER, tracingId);
         response.addHeader(KmoConstants.TRACING_ID_HEADER, tracingId);
+
+        MDC.put("tracingId", tracingId);
         filterChain.doFilter(idInjectedRequest, response);
-        // MDC
+        MDC.remove("tracingId");
     }
 
     public class InjectHeader extends HttpServletRequestWrapper {
