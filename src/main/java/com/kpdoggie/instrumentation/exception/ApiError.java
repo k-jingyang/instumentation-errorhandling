@@ -1,9 +1,7 @@
 package com.kpdoggie.instrumentation.exception;
 
-
 import lombok.Builder;
 import org.springframework.http.HttpStatus;
-
 
 @Builder
 public class ApiError {
@@ -16,5 +14,9 @@ public class ApiError {
 
     // Unique identifier of the trace
     public String instance;
+
+    public String getStatus() {
+        return String.valueOf(status.value());
+    }
 
 }
