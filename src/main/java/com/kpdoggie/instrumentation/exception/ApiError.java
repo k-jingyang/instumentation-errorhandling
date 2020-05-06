@@ -1,4 +1,4 @@
-package com.kpdoggie.instrumentation;
+package com.kpdoggie.instrumentation.exception;
 
 
 import lombok.Builder;
