@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty name="syslog_server" source="syslog.remote_server"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight(%-5level) %X{tracingId} %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost>${syslog_server}</syslogHost>
+        <facility>AUDIT</facility>
+        <suffixPattern>[%thread] %logger %msg</suffixPattern>
+    </appender>
+
+    <!-- View info and above logs for non project specific logging-->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="SYSLOG"/>
+    </root>
+
+    <!-- View debug and above logs for project specific logging. -->
+    <!--  additivity = false means that logs generated from this logger will not be sent to appenders in higher hierarchy (i.e. root) -->
+    <logger name="com.kpdoggie" level="debug" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+</configuration>

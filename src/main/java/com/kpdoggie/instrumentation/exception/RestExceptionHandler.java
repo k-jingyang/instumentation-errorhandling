@@ -20,7 +20,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ApiError> handleIllegalArgument(IllegalArgumentException e,
             WebRequest webRequest) {
 
-        log.debug("TEST");
+        log.info("TEST");
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .title("Lorem")

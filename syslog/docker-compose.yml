@@ -1,0 +1,19 @@
+version: "3.3"
+
+services:
+  syslog-server: 
+    image: balabit/syslog-ng:latest
+    
+    ports:
+      - "514:514"
+      - "601:601"
+    volumes:
+      - type: bind
+        source: ./syslog-ng.conf
+        target: /etc/syslog-ng/syslog-ng.conf
+      - type: bind
+        source: ./logs
+        target: /var/log
+  
+  syslog-client: # Use loggen to generate syslog message to send to syslog-server
+    image: balabit/syslog-ng:latest
